@@ -1,0 +1,53 @@
+//洛谷P3378//手写小根堆
+#include <iostream>
+#include <queue>
+using namespace std;
+const int N = 1e6 + 5;
+int heap[N], len = 0;      //len记录当前二叉树的长度
+void push(int x)           //上浮，插入新元素
+{
+    heap[++len] = x;
+    int i = len;
+    while (i > 1 && heap[i] < heap[i / 2])
+    {
+        swap(heap[i], heap[i / 2]);
+        i = i / 2;
+    }
+}
+void pop()
+{
+    heap[1] = heap[len--];           //根节点替换为最后一个节点，节点数量减一
+    int i = 1;
+    while (2 * i <= len)             //至少有左儿子
+    {
+        int son = 2 * i;
+        if (son < len && heap[son + 1] < heap[son])
+        {
+            son++;                   //有右儿子且右儿子更小
+        }
+        if (heap[son] < heap[i])
+        {
+            swap(heap[son], heap[i]);
+            i = son;
+        }
+        else break;
+    }
+}
+
+int main()
+{
+    int n; cin >> n;
+    while (n--)
+    {
+        int op; cin >> op;
+        if (op == 1) { int x; cin >> x; push(x); }
+        else if (op == 2)cout << heap[1] << endl;
+        else pop();
+    }
+    return 0;
+}
+
+//STL 小根堆
+priority_queue<int, vector<int>, greater<int>> q1;
+//STL 大根堆
+priority_queue<int> q2;
