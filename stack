@@ -1,0 +1,73 @@
+//洛谷P1449
+#include <iostream>
+#include <stack>
+using namespace std;
+const int N = 1e5 + 5;
+
+int main()
+{
+    char ch;
+    stack<int> Num, num;
+    while ((ch = getchar()) != '@')
+    {
+        if (ch == '0' || ch == '1' || ch == '2' || ch == '3' || ch == '4' || ch == '5' || ch == '6' || ch == '7' || ch == '8' || ch == '9')
+        {
+            num.push(ch-48);
+        }
+        else if (ch == '.')
+        {
+            int a = 0; int i = 1;
+            while (!num.empty())
+            {
+                a = a + i * num.top();
+                num.pop();
+                i = i * 10;
+            }
+            Num.push(a);
+        }
+        else if (ch == '+')
+        {
+            int ans = 0;
+            ans += Num.top();
+            Num.pop();
+            ans += Num.top();
+            Num.pop();
+            Num.push(ans);
+        }
+        else if (ch == '-')
+        {
+            int ans = 0;
+            int x = 0; int y = 0;
+            y = Num.top();
+            Num.pop();
+            x = Num.top();
+            Num.pop();
+            ans = x - y;
+            Num.push(ans);
+        }
+        else if (ch == '*')
+        {
+            int ans = 0;
+            int x = 0; int y = 0;
+            y = Num.top();
+            Num.pop();
+            x = Num.top();
+            Num.pop();
+            ans = x * y;
+            Num.push(ans);
+        }
+        else if (ch == '/')
+        {
+            int ans = 0;
+            int x = 0; int y = 0;
+            y = Num.top();
+            Num.pop();
+            x = Num.top();
+            Num.pop();
+            ans = x / y;
+            Num.push(ans);
+        }
+    }
+    cout << Num.top();
+    return 0;
+}
