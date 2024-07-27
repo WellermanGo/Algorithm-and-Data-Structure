@@ -22,3 +22,58 @@ int main()
     cout << ans;
     return 0;
 }
+
+//洛谷P1638
+#include <iostream>
+using namespace std;
+const int N = 1e6+5;
+using ll = long long;
+int a[N];
+int b[2005];
+int ans[N];
+
+int main()
+{
+    int n, m; cin >> n >> m;
+    for (int k = 1; k <= n; k++)
+    {
+        ans[k] = n;
+    }
+
+    for (int i = 1; i <= n; i++)cin >> a[i];
+    int i = 1, j = m;
+    for (int k = 1; k <= m; k++)
+    {
+        b[a[k]]++;
+    }
+    do
+    {
+        for (int k = 1; k <= m; k++)
+        {
+            if (b[k] == 0)
+            {
+                do
+                {
+                    j++;
+                    b[a[j]]++;
+                } while (a[j] != k && j <= n);
+            }
+        }
+        ans[i] = j - i + 1;
+        b[a[i]]--; i++;
+    } while (j <= n);
+    int x = n;
+    for (int k = 1; k <= n; k++)
+    {
+        x = min(x, ans[k]);
+    }
+    for (int k = 1; k <= n; k++)
+    {
+        if (ans[k] == x)
+        {
+            cout << k << " " << k + ans[k] - 1 << endl;
+            break;
+        }
+    }
+    return 0;
+}
