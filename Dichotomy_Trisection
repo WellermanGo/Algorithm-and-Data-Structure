@@ -65,3 +65,41 @@ int main()
     cout << ans;
     return 0;
 }
+
+//洛谷3382（实数三分）
+#include <iostream>
+#include <algorithm>
+using namespace std;
+const int N = 1e5+5;
+using ll = long long;
+const double eps = 1e-6;
+double a[N];
+int n;
+double check(double x)
+{
+    double s = 0;
+    for (int i = 1; i <= n + 1; i++)
+    {
+        s = s * x + a[i];
+    }
+    return s;
+}
+int main()
+{
+    cin >> n;
+    double left, right;
+    cin >> left >> right;
+    for (int i = 1; i <= n+1; i++)
+    {
+        cin >> a[i];
+    }
+    while (right - left > eps)
+    {
+        double k = (right - left) / 3.0;
+        double mid1 = left + k, mid2 = right - k;
+        if (check(mid1) > check(mid2)) right = mid2;
+        else left = mid1;
+    }
+    printf("%.5f\n", left);
+    return 0;
+}
