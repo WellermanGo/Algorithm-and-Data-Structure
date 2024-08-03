@@ -1,1 +1,15 @@
-//
+//快速幂算法
+int function(int a,int n)
+{
+    int r = 1;
+    while (n!=0)
+    {
+        if ((n & 1) == 1)          //n是奇数，即最后一位是1
+        {
+            r *= a;
+        }
+        a *= a;
+        n >>= 1;             //n舍弃最后一位
+    }
+    return r;
+}
