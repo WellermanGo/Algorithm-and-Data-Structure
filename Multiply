@@ -13,7 +13,7 @@ int function(int a,int n)
     }
     return r;
 }
-//洛谷P1816（忠诚）
+//洛谷P1816（忠诚）//RMQ问题
 #include <iostream>
 using namespace std;
 const int N = 1e5+5;
