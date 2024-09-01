@@ -1,0 +1,63 @@
+//动态链表基本操作
+struct node
+{
+    int data;
+    node* next;
+};
+int main()
+{
+    int n, m; cin >> n >> m;
+    node* head, * now, * pre, * suc;          //头节点，现节点，前驱节点，后继节点
+    head = new node; head->data = 1; head->next = nullptr;
+    now = head;
+    for (int i = 2; i <= n; i++)
+    {
+        suc = new node;
+        suc->data = i;
+        suc->next = nullptr;
+        
+        now->next = suc;
+        now = suc;
+    }
+    now->next = head;
+    return 0;
+}
+
+/*利用两个一维数组建立双向静态链表
+ *插入与删除操作不需要前驱指针
+ */
+int pre[N], suc[N];    //前驱与后继
+int data[N];
+int n; cin >> n;
+int now = 1;
+suc[now] = 0; pre[now] = 0;
+suc[0] = now; pre[0] = now;
+for (int i = 2; i <= n; i++)
+{
+    int flag;
+    cin >> now >> flag;
+    if (flag == 0)
+    {
+        suc[pre[now]] = i; pre[i] = pre[now]; 
+        pre[now] = i; suc[i] = now;
+    }
+    else if( flag == 1 )
+    {
+        pre[suc[now]] = i; suc[i] = suc[now]; 
+        suc[now] = i; pre[i] = now;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
