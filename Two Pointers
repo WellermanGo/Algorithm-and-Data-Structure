@@ -23,7 +23,7 @@ int main()
     return 0;
 }
 
-//洛谷P1638
+//洛谷P1638//逛画展
 #include <iostream>
 using namespace std;
 const int N = 1e6+5;
