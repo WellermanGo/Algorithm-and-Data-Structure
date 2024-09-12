@@ -1,5 +1,5 @@
 //找x或x的后继
-int bin_search1(int* a, int n, int x)
+int bin_search1(int* a, int n, int x)         //区间左闭右开，即对区间[1,n-1]二分
 {
     int left = 1, right = n;
     while (left < right)
