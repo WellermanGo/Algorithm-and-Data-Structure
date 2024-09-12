@@ -23,7 +23,7 @@ int bin_search2(int* a, int n, int x)
     return left;
 }
 
-//洛谷P1824（整数二分）
+//洛谷P1824进击的奶牛（整数二分）
 #include <iostream>
 #include <algorithm>
 using namespace std;
