@@ -66,6 +66,78 @@ int main()
     return 0;
 }
 
+//洛谷1577切绳子（实数二分）
+#include <iostream>
+#include <cmath>
+using namespace std;
+const int N = 1e5 + 5;
+float a[N];
+int n, k;
+
+int check(float L)
+{
+    int num = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        num += floor(a[i] / L);
+    }
+    if (num >= k)
+    {
+        return true;
+    }
+    else return false;
+}
+
+int main()
+{
+    cin >> n >> k;
+    float sum = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        cin >> a[i];
+        sum += a[i];
+    }
+    float right = sum / k;
+    float left = 0;
+    for(int j=1;j<=150;j++)
+    {
+        float mid = left + (right - left) / 2;
+        if (check(mid))
+        {
+            left = mid;
+        }
+        else
+        {
+            right = mid;
+        }
+    }
+    left *= 100;                             
+    int ans = (int)left;                      //如何舍弃小数点两位以后的数字，避免四舍五入
+    printf("%.2f", ans / 100.0);      
+    return 0;
+}
+
+
+int main()                          //关于格式化输出
+{
+    float a=3.145;                  //printf是五舍六入
+    float b=3.146;
+    printf("%.2f %.2f\n",a,b);
+    cout<<fixed<<setprecision(2)<<a<<" "<<b<<endl;
+
+    float c=3.186;
+    float d=3.196;
+    printf("%.2f %.2f\n",c,d);
+    cout<<fixed<<setprecision(2)<<c<<" "<<d<<endl;
+
+    float e=3.896;
+    float f=3.996;
+    printf("%.2f %.2f\n",e,f);
+    cout<<fixed<<setprecision(2)<<e<<" "<<f<<endl;
+    return 0;
+}
+
+
 //洛谷3382（实数三分）
 #include <iostream>
 #include <algorithm>
