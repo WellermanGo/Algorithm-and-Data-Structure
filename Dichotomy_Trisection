@@ -56,7 +56,7 @@ int main()
         cin >> a[i];
         sum += a[i];
     }
-    ll right = sum / k + 1;
+    ll right = sum / k + 1;                        //right+1是因为此二分法是左闭右开的，避免出现边界情况；
     ll left = 0;
     ll ans = 0;
     while (left < right)
