@@ -9,7 +9,7 @@ int function(int a,int n)
             r *= a;
         }
         a *= a;
-        n >>= 1;             //n舍弃最后一位
+        n >>= 1;                   //n舍弃最后一位
     }
     return r;
 }
@@ -29,19 +29,19 @@ int main()
     for (int i = 1; i <= m; i++)
     {
         cin >> Data[i];
-        a[i][0] = Data[i];
+        a[i][0] = Data[i];                            //初始化
     }
     for (int j = 1; (1 << j) <= m; j++)
     {
         for (int i = 1; i + (1 << j) - 1 <= m; i++)
         {
-            a[i][j] = min(a[i][j - 1], a[i + (1 << (j - 1))][j - 1]);
+            a[i][j] = min(a[i][j - 1], a[i + (1 << (j - 1))][j - 1]);      //提前预置一些跳板 
         }
     }
     for (int i = 1; i <= n; i++)
     {
         int l, r; cin >> l >> r;
-        int k = (int)(log((r - l + 1) * 1.0) / log(2.0));
+        int k = (int)(log((r - l + 1) * 1.0) / log(2.0));                 //可改为 int k=log2(R-L+1);
         ans[i] = min(a[l][k], a[r - (1 << k) + 1][k]);
     }
     for (int i = 1; i <= n; i++)cout << ans[i] << " ";
