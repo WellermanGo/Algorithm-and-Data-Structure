@@ -1,0 +1,49 @@
+//快速幂算法
+int function(int a,int n)
+{
+    int r = 1;
+    while (n!=0)
+    {
+        if ((n & 1) == 1)          //n是奇数，即最后一位是1
+        {
+            r *= a;
+        }
+        a *= a;
+        n >>= 1;             //n舍弃最后一位
+    }
+    return r;
+}
+
+//洛谷P1816（忠诚）//RMQ问题
+#include <iostream>
+using namespace std;
+const int N = 1e5+5;
+using ll = long long;
+
+int Data[N], ans[N];
+int a[N][20];
+
+int main()
+{
+    int m, n; cin >> m >> n;
+    for (int i = 1; i <= m; i++)
+    {
+        cin >> Data[i];
+        a[i][0] = Data[i];
+    }
+    for (int j = 1; (1 << j) <= m; j++)
+    {
+        for (int i = 1; i + (1 << j) - 1 <= m; i++)
+        {
+            a[i][j] = min(a[i][j - 1], a[i + (1 << (j - 1))][j - 1]);
+        }
+    }
+    for (int i = 1; i <= n; i++)
+    {
+        int l, r; cin >> l >> r;
+        int k = (int)(log((r - l + 1) * 1.0) / log(2.0));
+        ans[i] = min(a[l][k], a[r - (1 << k) + 1][k]);
+    }
+    for (int i = 1; i <= n; i++)cout << ans[i] << " ";
+    return 0;
+}

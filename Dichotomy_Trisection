@@ -1,0 +1,193 @@
+//找x或x的后继
+int bin_search1(int* a, int n, int x)         //区间左闭右开，即对区间[1,n-1]二分
+{                                             //也就是说，数组的大小是n+1,从0到n一共n+1个数 
+    int left = 1, right = n;                  //left指向a[0]，right指向a[n]
+    while (left < right)                      //返回值是目标值x对应的数组下标，若没有x则返回第一个大于x的数所对应的数组下标
+    {                                         //若目标值大于最后一个数a[n]，则返回n
+        int mid = (left + right) >> 1;
+        if (a[mid] >= x)right = mid;
+        else left = mid + 1;
+    }
+    return left;
+}
+//找x或x的前驱
+int bin_search2(int* a, int n, int x)
+{
+    int left = 1, right = n-1;
+    while (left < right)
+    {
+        int mid = (left + right+1) >> 1;
+        if (a[mid] <= x)left = mid;
+        else right = mid - 1;
+    }
+    return left;
+}
+
+
+//洛谷P2440木材加工（整数二分）
+#include <iostream>
+#include <cmath>
+using namespace std;
+using ll = long long;
+const int N = 2e5 + 5;
+ll a[N];
+int n;
+ll k;
+
+int check(ll L)
+{
+    ll num = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        num += a[i] / L;
+    }
+    if (num >= k)
+    {
+        return true;
+    }
+    else return false;
+}
+int main()
+{
+    cin >> n >> k;
+    ll sum = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        cin >> a[i];
+        sum += a[i];
+    }
+    ll right = sum / k + 1;                        //right+1是因为此二分法是左闭右开的，避免出现边界情况；
+    ll left = 0;
+    ll ans = 0;
+    while (left < right)
+    {
+        ll mid = left + (right - left) / 2;
+        if (mid == 0)                             //mid将作为除数，必须检查其是否等于0，否则可能导致运行错误re;
+        {
+            cout << "0";
+            return 0;
+        }
+        if (check(mid))
+        {
+            ans = mid;
+            left = mid + 1;
+        }
+        else
+        {
+            right = mid;
+        }
+    }
+    cout << ans;
+    return 0;
+}
+
+
+//洛谷1577切绳子（实数二分）
+#include <iostream>
+#include <cmath>
+using namespace std;
+const int N = 1e5 + 5;
+float a[N];
+int n, k;
+
+int check(float L)
+{
+    int num = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        num += floor(a[i] / L);
+    }
+    if (num >= k)
+    {
+        return true;
+    }
+    else return false;
+}
+int main()
+{
+    cin >> n >> k;
+    float sum = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        cin >> a[i];
+        sum += a[i];
+    }
+    float right = sum / k;
+    float left = 0;
+    for(int j=1;j<=150;j++)
+    {
+        float mid = left + (right - left) / 2;
+        if (check(mid))
+        {
+            left = mid;
+        }
+        else
+        {
+            right = mid;
+        }
+    }
+    left *= 100;                             
+    int ans = (int)left;                      //如何舍弃小数点两位以后的数字，避免四舍五入
+    printf("%.2f", ans / 100.0);      
+    return 0;
+}
+
+
+//关于格式化输出保留小数位的问题
+int main()                          
+{
+    float a=3.145;                  //printf是五舍六入
+    float b=3.146;
+    printf("%.2f %.2f\n",a,b);
+    cout<<fixed<<setprecision(2)<<a<<" "<<b<<endl;
+
+    float c=3.186;
+    float d=3.196;
+    printf("%.2f %.2f\n",c,d);
+    cout<<fixed<<setprecision(2)<<c<<" "<<d<<endl;
+
+    float e=3.896;
+    float f=3.996;
+    printf("%.2f %.2f\n",e,f);
+    cout<<fixed<<setprecision(2)<<e<<" "<<f<<endl;
+    return 0;
+}
+
+
+//洛谷3382（实数三分）
+#include <iostream>
+#include <algorithm>
+using namespace std;
+const int N = 1e5+5;
+using ll = long long;
+const double eps = 1e-6;
+double a[N];
+int n;
+double check(double x)
+{
+    double s = 0;
+    for (int i = 1; i <= n + 1; i++)
+    {
+        s = s * x + a[i];
+    }
+    return s;
+}
+int main()
+{
+    cin >> n;
+    double left, right;
+    cin >> left >> right;
+    for (int i = 1; i <= n+1; i++)
+    {
+        cin >> a[i];
+    }
+    while (right - left > eps)
+    {
+        double k = (right - left) / 3.0;
+        double mid1 = left + k, mid2 = right - k;
+        if (check(mid1) > check(mid2)) right = mid2;
+        else left = mid1;
+    }
+    printf("%.5f\n", left);
+    return 0;
+}
