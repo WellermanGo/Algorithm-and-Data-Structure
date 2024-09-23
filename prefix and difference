@@ -1,1 +1,33 @@
-////
+//洛谷P2367语文成绩
+#include <iostream>
+#include <cstring>
+using namespace std;
+using ll = long long;
+const int N = 5e6+5;
+int a[N], D[N];
+
+int main()
+{
+    int n, p;
+    cin >> n >> p;
+    for (int i = 1; i <= n; i++)
+    {
+        cin >> a[i];
+        D[i] = a[i] - a[i - 1];
+    }
+    for (int i = 1; i <= p; i++)
+    {
+        int L, R, x;
+        cin >> L >> R >> x;
+        D[L] += x;                              //差分数组
+        D[R + 1] -= x;
+    }
+    int ans = 100;
+    for (int i = 1; i <= n; i++)
+    {
+        a[i] = a[i - 1] + D[i];
+        ans = min(ans, a[i]);
+    }
+    cout << ans;
+    return 0;
+}
