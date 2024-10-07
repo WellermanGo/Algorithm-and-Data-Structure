@@ -56,6 +56,7 @@ int main() {
 		for (int j = 1; j <= n; j++)
 		{
 			a[i][j] = D[i][j] + a[i - 1][j] + a[i][j - 1] - a[i - 1][j - 1];
+                        //D[i][j] += D[i - 1][j] + D[i][j - 1] - D[i - 1][j - 1];                 把用过的D[][]看作a[][]，不用另外定义a[][]了，大大节省空间
 			cout << a[i][j] << " ";
 		}
 		cout << endl;
