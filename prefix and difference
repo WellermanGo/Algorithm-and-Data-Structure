@@ -1,3 +1,4 @@
+一维差分
 //洛谷P2367语文成绩
 #include <iostream>
 #include <cstring>
@@ -31,3 +32,4 @@ int main()
     cout << ans;
     return 0;
 }
+一维差分：对“区间修改”很高效，但对“单点查询”并不高效。
