@@ -65,3 +65,47 @@ int main() {
 }
 想不清楚原理时，想想我画的那个图。差分的核心还是“前缀和的逆运算”
 
+######################################不开long long见祖宗###############################################
+#include <iostream>
+#include <stdlib.h>
+#include <stdio.h>
+#include<string.h>
+using namespace std;
+using ll = long long;
+const int N = 1e5 + 5;
+ll tra[N], a[N], b[N], c[N], D[N];               //此处若不开ll数组会产生严重后果
+
+int main(void)
+{
+	int n, m; cin >> n >> m;
+	for (int i = 1; i <= m; i++)
+	{
+		cin >> tra[i];
+	}
+	for (int i = 1; i < n; i++)
+	{
+		cin >> a[i] >> b[i] >> c[i];
+	}
+
+
+	for (int i = 1; i <= m - 1; i++)
+	{
+		int maxi = max(tra[i], tra[i + 1]) - 1;
+		int mini = min(tra[i], tra[i + 1]);
+		D[mini] += 1;
+		D[maxi + 1] -= 1;
+	}
+	for (int i = 1; i <= n - 1; i++)
+	{
+		tra[i] = D[i] + tra[i - 1];
+	}
+	ll ans = 0;
+	for (int i = 1; i <= n - 1; i++)
+	{
+		ll x = tra[i] * a[i];
+        ll y = c[i] + tra[i] * b[i];
+        ans += min(x, y);
+	}
+	cout << ans;
+	return 0;
+}
