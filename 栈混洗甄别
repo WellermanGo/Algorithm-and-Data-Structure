@@ -1,0 +1,37 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+using ll = long long;
+const int N = 1e5 + 5;
+stack<int> s;
+int a[N];
+
+int main(void)
+{
+	int n; cin >> n;
+	for (int i = 1; i <= n; i++)
+	{
+		cin >> a[i];
+	}
+	int k = 1, i = 1;
+	while (k <= n)
+	{
+		if (empty(s) || s.top() < a[k])
+		{
+			s.push(i);
+			i++;
+		}
+		else if (s.top() == a[k])
+		{
+			s.pop();
+			k++;
+		}
+		else if (s.top() > a[k])
+		{
+			cout << "出栈序列非法";
+			return 0;
+		}
+	}
+	cout << "出栈序列合法";
+	return 0;
+}
