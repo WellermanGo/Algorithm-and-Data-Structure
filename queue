@@ -69,14 +69,7 @@ int main()
         {
             dq.pop_front();
         }
-        if (dq.empty())
-        {
-            ans = max(ans, s[i]);
-        }
-        else 
-        {
-            ans = max(ans, s[i] - s[dq.front()]);
-        }
+        ans = max(ans, s[i] - s[dq.front()]);
         while (!dq.empty() && s[dq.back()] >= s[i])
         {
             dq.pop_back();
