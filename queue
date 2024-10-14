@@ -39,8 +39,12 @@ int main() {
 	cout<<'\n';
 	return 0;
 }
-//最大子序和问题分为两种：不定长和定长（给定一限制长度，求不超过此长度的子序和最大值）
+
+
+//最大子序和问题分为两种：不定长和定长（又分为确定长度和限制长度）
 //前一种用贪心法或动态规划，后一种可用单调队列
+
+//洛谷P1714切蛋糕
 #include <iostream>
 #include <deque>
 using namespace std;
@@ -69,7 +73,7 @@ int main()
         {
             ans = max(ans, s[i]);
         }
-        else
+        else 
         {
             ans = max(ans, s[i] - s[dq.front()]);
         }
