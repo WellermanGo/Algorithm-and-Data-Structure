@@ -1,0 +1,108 @@
+############################ 自定义排序函数 #############################
+//洛谷P1093
+#include <iostream>
+#include <algorithm>
+using namespace std;
+using ll = long long;
+const int N = 1e6 + 5;
+struct stu
+{
+    int id;
+    int c, m, e;
+    int sum;
+}st[305];
+bool cmp(stu a, stu b)
+{
+    if (a.sum != b.sum)          //总分不同的话，总分高的排名高
+    {
+        return a.sum > b.sum;
+    }
+    else
+    {
+        if (a.c != b.c)
+        {
+            return a.c > b.c;     //总分相同的，语文高的排名高
+        }
+        else
+        {
+            return a.id < b.id;      //总分和语文相同，学号小的排名高
+        }
+    }
+}
+int main()
+{
+    int n; cin >> n;
+    for (int i = 1; i <= n; i++)
+    {
+        st[i].id = i;
+        cin >> st[i].c >> st[i].m >> st[i].e;
+        st[i].sum = st[i].c + st[i].m + st[i].e;
+    }
+    sort(st + 1, st + 1 + n, cmp);
+    for (int i = 1; i <= 5; i++)
+    {
+        cout << st[i].id << " " << st[i].sum << endl;
+    }
+    return 0;
+}
+#################################### 排列函数 ###########################################
+#include <iostream>
+#include <algorithm>
+using namespace std;
+using ll = long long;
+const int N = 1e6 + 5;
+int main()
+{
+    string s = "bca";
+    sort(s.begin(), s.end());     //得到最小排列"abc"
+    do
+    {
+        cout << s << endl;
+    } while (next_permutation(s.begin(), s.end()));
+    return 0;
+}
+
+//next_permutation()函数输出下一个排列组合，将新的排列放到原来的空间里
+//返回布尔值，如果有下一个排列，返回true，没有返回false
+//如果序列中有重复元素，该函数生成的序列会去重
+//对应的还有prev_permutation()函数
+
+//自定义排列函数，可以实现取前n个数中的m个数，求其全排列
+#include <iostream>
+#include <algorithm>
+using namespace std;
+using ll = long long;
+const int N = 1e6 + 5;
+
+int a[20] = { 1,2,3,4,5,6,7,8,9,10,11,12,13 };
+bool vis[20];              //记录第i个数是否被用过
+int b[20];
+
+void dfs(int s, int t)
+{
+    if (s == 3)                 //当排列的长度为3时，输出结果
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            cout << b[i] << " ";
+        }
+        cout << endl;
+        return;
+    }
+    for (int i = 0; i < t; i++)
+    {
+        if (!vis[i])
+        {
+            vis[i] = true;
+            b[s] = a[i];
+            dfs(s + 1, t);
+            vis[i] = false;
+        }
+    }
+}
+int main()
+{
+    int n = 4;
+    dfs(0, n);       //取前n个数中的某些数，求其全排列
+    return 0;
+}
