@@ -12,7 +12,7 @@ struct datax
     int id;
 }olda[N];
 int newa[N];
-bool cmp(datax x, datax y)
+bool cmp(datax x, datax y)            //自定义比较函数
 {
     return x.val < y.val;
 }
