@@ -14,7 +14,7 @@ struct datax
 int newa[N];
 bool cmp(datax x, datax y)            //自定义比较函数
 {
-    return x.val < y.val;
+    return x.val < y.val;             //默认顺序是 x y，返回值为真则不动，为假就调换
 }
 int main()
 {
