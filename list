@@ -48,16 +48,87 @@ for (int i = 2; i <= n; i++)
     }
 }
 
+#####################################双向动态链表###############################
+#include <iostream>
+#include <algorithm>
+#include <stack>
+#include <string>
+using namespace std;
+const int N = 1e5 + 5;
 
+struct node
+{
+    char s;
+    node* prev;
+    node* next;
+};
 
+int main()
+{
+    string a;
+    getline(cin,a);             //可读入一行字符串，包括空格
+    int len = a.length();
 
+    node* head = new node;
+    node* tail = new node;
+    head->s = tail->s = len;
+    head->next = tail; head->prev = NULL;
+    tail->next = NULL; tail->prev = head;
 
+    node* now = head;
 
-
-
-
-
-
-
-
-
+    for (int i = 0; i < len; i++)
+    {
+        if (a[i] == '{')
+        {
+            now = head;
+        }
+        else if (a[i] == '}')
+        {
+            now = tail->prev;
+        }
+        else if (a[i] == '>')
+        {
+            if (now->next != tail)
+                now = now->next;
+        }
+        else if (a[i] == '<')
+        {
+            if (now != head)
+                now = now->prev;
+        }
+        else if (a[i] == '#')          
+        {
+            if (now == head)continue;
+            node* temp = now->prev;
+            now->prev->next = now->next;
+            now->next->prev = now->prev;
+            delete now;
+            now = temp;                      //光标右移，此步非常重要
+        }
+        else
+        {
+            node* p = new node;
+            p->s = a[i];
+            p->next = now->next;
+            now->next->prev = p;
+            now->next = p;
+            p->prev = now;
+            now = now->next;
+        }
+    }
+    now = head;
+    while (now->next != tail)
+    {
+        now = now->next;
+        cout << now->s;
+    }
+    now = head;
+    while (now->next != NULL)
+    {
+        now = now->next;
+        delete head;
+        head = now;
+    }
+    return 0;
+}
