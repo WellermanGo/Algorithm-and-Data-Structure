@@ -1,0 +1,104 @@
+ ############################ BFS 代码实现 ###################################
+//静态版二叉树//
+#include <iostream>
+#include <algorithm>
+#include <queue>
+using namespace std;
+const int N = 10;
+
+struct node
+{
+    char value;
+    int lson, rson;
+}tree[N];
+
+int index = 1;
+
+int newNode(char val)
+{
+    tree[index].value = val;
+    tree[index].lson = tree[index].rson = 0;
+    return index++;
+}
+
+void Insert(int& father, int child, int l_r)
+{
+    if (l_r == 0)tree[father].lson = child;
+    else tree[father].rson = child;
+}
+
+int buildTree()
+{
+    int A = newNode('A'); int B = newNode('B'); int C = newNode('C');
+    int D = newNode('D'); int E = newNode('E'); int F = newNode('F');
+    int G = newNode('G'); int H = newNode('H'); int I = newNode('I');
+    Insert(E, B, 0); Insert(E, G, 1);
+    Insert(B, A, 0); Insert(B, D, 1);
+    Insert(G, F, 0); Insert(G, I, 1);
+    Insert(D, C, 0); Insert(I, H, 0);
+    int root = E;
+    return E;
+}
+
+int main()
+{
+    int root = buildTree();
+    queue<int> q;
+    q.push(root);
+    while (q.size())
+    {
+        int tmp = q.front();
+        cout << tree[tmp].value << " ";
+        q.pop();
+        if (tree[tmp].lson != 0)q.push(tree[tmp].lson);
+        if (tree[tmp].rson != 0)q.push(tree[tmp].rson);
+    }
+    return 0;
+}
+
+
+
+//指针版二叉树//
+#include <iostream>
+#include <algorithm>
+#include <queue>
+using namespace std;
+const int N = 10;
+
+struct node
+{
+    char value;
+    node* l, * r;
+    node(char value = '#', node* l = NULL, node* r = NULL) :value(value), l(l), r(r) {}
+};
+
+void removeTree(node* root)
+{
+    if (root == NULL)return;
+    removeTree(root->l);
+    removeTree(root->r);
+    delete root;
+}
+
+int main()
+{
+    node* A, * B, * C, * D, * E, * F, * G, * H, * I;
+    A = new node('A'); B = new node('B'); C = new node('C');
+    D = new node('D'); E = new node('E'); F = new node('F');
+    G = new node('G'); H = new node('H'); I = new node('I');
+    E->l = B; E->r = G; B->l = A; B->r = D;
+    G->l = F; G->r = I; D->l = C; I->l = H;
+    queue<node*> q;
+    q.push(E);
+    while (q.size())
+    {
+        node* tmp = q.front();
+        cout << tmp->value << " ";
+        q.pop();
+        if (tmp->l)q.push(tmp->l);
+        if (tmp->r)q.push(tmp->r);
+    }
+    return 0;
+}
+
+##################################### DFS 代码实现#######################################
