@@ -1,1 +1,56 @@
-///
+洛谷P1111修复公路
+#include <iostream>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <cstring>
+using namespace std;
+using ll = long long;
+const int N = 1e5 + 5;
+
+int parent[1005];
+int n, m;
+struct Road
+{
+    int a, b, time;
+};
+bool cmp(Road A, Road B)
+{
+    return A.time < B.time;
+}
+Road road[100005];
+
+int find(int x)
+{
+    if (parent[x] == 0)return x;
+    parent[x] = find(parent[x]);
+    return parent[x];
+}
+int main()
+{
+    cin >> n >> m;
+    int x = n;//连通块数量
+    for (int i = 1; i <= m; i++)
+    {
+        cin >> road[i].a >> road[i].b >> road[i].time;
+    }
+    sort(road + 1, road + 1 + m, cmp);
+    for (int i = 1; i <= m; i++)
+    {
+        int aa = find(road[i].a);
+        int bb = find(road[i].b);
+        if (aa != bb)
+        {
+            parent[aa] = bb;
+            x--;
+        }
+        if (x == 1)
+        {
+            cout << road[i].time;
+            return 0;
+        }
+    }
+    cout << -1;
+    return 0;
+}
+
